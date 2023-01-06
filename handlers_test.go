@@ -205,7 +205,7 @@ func createOverwriteDeleteSeq(t testing.TB, path string, data string, forbiddenF
 	return req
 }
 
-func randomDataAndId(t *testing.T) (string, string) {
+func generateRandomDataAndID(t *testing.T) (string, string) {
 	buf := make([]byte, 32)
 	_, err := io.ReadFull(rand.Reader, buf)
 	if err != nil {
@@ -258,7 +258,7 @@ func testResticHandler(t *testing.T, tests *TestSuite, server Server, pathsToCre
 
 // TestResticHandler runs tests on the restic handler code, default mode (everything allowed)
 func TestResticDefaultHandler(t *testing.T) {
-	data, fileID := randomDataAndId(t)
+	data, fileID := generateRandomDataAndID(t)
 
 	var tests = TestSuite{
 		{createOverwriteDeleteSeq(t, "/config", data, 0)},
@@ -278,7 +278,7 @@ func TestResticDefaultHandler(t *testing.T) {
 
 // TestResticHandler runs tests on the restic handler code, disabled blob verification
 func TestResticNoVerifyUploadHandler(t *testing.T) {
-	data, fileID := randomDataAndId(t)
+	data, fileID := generateRandomDataAndID(t)
 
 	var tests = TestSuite{
 		{createOverwriteDeleteSeq(t, "/config", data, 0)},
@@ -299,7 +299,7 @@ func TestResticNoVerifyUploadHandler(t *testing.T) {
 
 // TestResticHandler runs tests on the restic handler code, default mode (everything allowed)
 func TestResticAppendOnlyUploadHandler(t *testing.T) {
-	data, fileID := randomDataAndId(t)
+	data, fileID := generateRandomDataAndID(t)
 
 	var tests = TestSuite{
 		{createOverwriteDeleteSeq(t, "/config", data, DeleteForbidden)},
@@ -320,7 +320,7 @@ func TestResticAppendOnlyUploadHandler(t *testing.T) {
 
 // TestResticHandler runs tests on the restic handler code, default mode (everything allowed)
 func TestResticWriteOnlyUploadHandler(t *testing.T) {
-	data, fileID := randomDataAndId(t)
+	data, fileID := generateRandomDataAndID(t)
 
 	var tests = TestSuite{
 		{createOverwriteDeleteSeq(t, "/config", data, DeleteForbidden)},
@@ -341,7 +341,7 @@ func TestResticWriteOnlyUploadHandler(t *testing.T) {
 
 // TestResticHandler runs tests on the restic handler code, default mode (everything allowed)
 func TestResticPrivateRepoUploadHandler(t *testing.T) {
-	data, fileID := randomDataAndId(t)
+	data, fileID := generateRandomDataAndID(t)
 
 	var tests = TestSuite{
 		{createOverwriteDeleteSeq(t, "/parent1/sub1/config", "foobar", DeleteForbidden)},
